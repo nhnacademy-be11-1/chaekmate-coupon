@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
+import shop.chaekmate.api.common.entity.BaseEntity;
 
 @Getter
 @Table(name = "coupon_applied_category")
@@ -22,7 +23,7 @@ import org.hibernate.annotations.SQLRestriction;
 @NoArgsConstructor(access = PROTECTED)
 @SQLDelete(sql = "UPDATE coupon_applied_category SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @Entity
-public class CouponAppliedCategory {
+public class CouponAppliedCategory extends BaseEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
