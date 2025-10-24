@@ -23,7 +23,6 @@ import org.hibernate.annotations.SQLRestriction;
 @SQLDelete(sql = "UPDATE coupon_applied_book SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @Entity
 public class CouponAppliedBook {
-
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;

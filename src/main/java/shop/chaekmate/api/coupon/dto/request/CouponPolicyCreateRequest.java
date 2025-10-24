@@ -50,7 +50,6 @@ public record CouponPolicyCreateRequest(
         @PositiveOrZero(message = "남은 수량은 0 이상이어야 합니다.")
         long remainingQuantity
 ) {
-
     public CouponPolicy toCouponPolicy() {
         return new CouponPolicy(
                 name,

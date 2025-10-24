@@ -26,7 +26,6 @@ import shop.chaekmate.api.coupon.service.CouponService;
 @RequestMapping("/admin")
 @RestController
 public class CouponAdminController {
-
     private final CouponService couponService;
 
     // TODO: 권한 제어 필요

@@ -7,12 +7,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import shop.chaekmate.api.coupon.dto.response.BooksGetResponse;
 import shop.chaekmate.api.coupon.dto.response.CategoriesGetResponse;
 
-@FeignClient(
-        name = "coreClient",
-        url = "${core.service.url}"
-)
-public interface CoreClient {
-
+// TODO: 코어 서버 이름 정해지면 변경 고려
+@FeignClient(name = "core-api")
+public interface CoreApiClient {
     @GetMapping("/categories")
     List<CategoriesGetResponse> getFullCategoriesById(@RequestParam List<Long> categoryIds);
 

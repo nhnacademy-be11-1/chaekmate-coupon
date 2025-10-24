@@ -25,7 +25,6 @@ import shop.chaekmate.api.common.entity.BaseEntity;
 @SQLDelete(sql = "UPDATE issued_coupon SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @Entity
 public class IssuedCoupon extends BaseEntity {
-
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;

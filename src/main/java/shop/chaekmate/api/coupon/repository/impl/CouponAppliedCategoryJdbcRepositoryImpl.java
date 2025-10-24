@@ -12,7 +12,6 @@ import shop.chaekmate.api.coupon.repository.CouponAppliedCategoryJdbcRepository;
 @RequiredArgsConstructor
 @Repository
 public class CouponAppliedCategoryJdbcRepositoryImpl implements CouponAppliedCategoryJdbcRepository {
-
     private final JdbcTemplate jdbcTemplate;
 
     @Value("${jdbc-template-batch-size}")

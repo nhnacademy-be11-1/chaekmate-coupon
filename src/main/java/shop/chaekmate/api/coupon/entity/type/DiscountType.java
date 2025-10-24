@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum DiscountType {
-
     RATE("정률"),
     AMOUNT("정액"),
     ;

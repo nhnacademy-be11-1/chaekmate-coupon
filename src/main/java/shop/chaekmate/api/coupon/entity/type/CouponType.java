@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum CouponType {
-
     WELCOME("웰컴"),
     BIRTHDAY("생일"),
     BOOK("도서"),

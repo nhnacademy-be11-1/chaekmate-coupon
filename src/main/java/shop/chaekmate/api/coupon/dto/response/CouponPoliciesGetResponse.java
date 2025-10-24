@@ -13,7 +13,6 @@ public record CouponPoliciesGetResponse(
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {
-
     public static CouponPoliciesGetResponse fromEntity(CouponPolicy couponPolicy) {
         return new CouponPoliciesGetResponse(
                 couponPolicy.getId(),

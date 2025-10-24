@@ -20,24 +20,6 @@ public record CouponPolicyGetResponse(
         long maxAppliedAmount,
         long remainingQuantity
 ) {
-
-    public static CouponPolicyGetResponse fromEntity(CouponPolicy couponPolicy) {
-        return new CouponPolicyGetResponse(
-                couponPolicy.getId(),
-                couponPolicy.getName(),
-                couponPolicy.getType().getName(),
-                null,
-                couponPolicy.getAppliedPeriodType().getName(),
-                couponPolicy.getAppliedStartedAt(),
-                couponPolicy.getAppliedExpiredAt(),
-                couponPolicy.getDiscountType().getName(),
-                couponPolicy.getDiscountValue(),
-                couponPolicy.getMinAvailableAmount(),
-                couponPolicy.getMaxAppliedAmount(),
-                couponPolicy.getRemainingQuantity()
-        );
-    }
-
     public static CouponPolicyGetResponse ofBook(CouponPolicy couponPolicy, List<BooksGetResponse> responses) {
         String bookNames = responses.stream()
                 .map(BooksGetResponse::name)
