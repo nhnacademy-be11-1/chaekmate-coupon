@@ -36,7 +36,7 @@ public class BookCouponStrategy implements CouponTypeStrategy {
 
     @Override
     public void update(CouponPolicy couponPolicy, CouponPolicyUpdateRequest request) {
-        couponAppliedBookRepository.deleteAllByCouponPolicy(couponPolicy);
+        couponAppliedBookRepository.softDeleteAllByCouponPolicy(couponPolicy);
 
         List<CouponAppliedBook> books = request.ids().stream()
                 .map(id -> new CouponAppliedBook(couponPolicy, id))
@@ -47,7 +47,7 @@ public class BookCouponStrategy implements CouponTypeStrategy {
 
     @Override
     public void delete(CouponPolicy couponPolicy) {
-        couponAppliedBookRepository.deleteAllByCouponPolicy(couponPolicy);
+        couponAppliedBookRepository.softDeleteAllByCouponPolicy(couponPolicy);
     }
 
     @Override

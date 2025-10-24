@@ -112,7 +112,7 @@ class CategoryCouponStrategyTest {
         strategy.update(couponPolicy, request);
 
         // then
-        verify(categoryRepository, times(1)).deleteAllByCouponPolicy(couponPolicy);
+        verify(categoryRepository, times(1)).softDeleteAllByCouponPolicy(couponPolicy);
         verify(categoryRepository, times(1)).saveAllInBatch(any());
     }
 
@@ -125,7 +125,7 @@ class CategoryCouponStrategyTest {
         strategy.delete(couponPolicy);
 
         // then
-        verify(categoryRepository, times(1)).deleteAllByCouponPolicy(couponPolicy);
+        verify(categoryRepository, times(1)).softDeleteAllByCouponPolicy(couponPolicy);
     }
 
     @Test

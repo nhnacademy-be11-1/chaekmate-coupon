@@ -112,7 +112,7 @@ class BookCouponStrategyTest {
         strategy.update(couponPolicy, request);
 
         // then
-        verify(couponAppliedBookRepository, times(1)).deleteAllByCouponPolicy(couponPolicy);
+        verify(couponAppliedBookRepository, times(1)).softDeleteAllByCouponPolicy(couponPolicy);
         verify(couponAppliedBookRepository, times(1)).saveAllInBatch(anyList());
     }
 
@@ -125,7 +125,7 @@ class BookCouponStrategyTest {
         strategy.delete(couponPolicy);
 
         // then
-        verify(couponAppliedBookRepository).deleteAllByCouponPolicy(couponPolicy);
+        verify(couponAppliedBookRepository).softDeleteAllByCouponPolicy(couponPolicy);
         verifyNoMoreInteractions(couponAppliedBookRepository);
     }
 

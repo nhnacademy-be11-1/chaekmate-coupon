@@ -14,8 +14,8 @@ import shop.chaekmate.api.coupon.repository.CouponPolicyRepository;
 import shop.chaekmate.api.coupon.service.strategy.CouponStrategyFactory;
 import shop.chaekmate.api.coupon.service.strategy.CouponTypeStrategy;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class CouponService {
     private final CouponPolicyRepository couponPolicyRepository;
 
