@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import shop.chaekmate.api.coupon.controller.docs.CouponAdminControllerDocs;
 import shop.chaekmate.api.coupon.dto.request.CouponPolicyCreateRequest;
 import shop.chaekmate.api.coupon.dto.request.CouponPolicyUpdateRequest;
 import shop.chaekmate.api.coupon.dto.response.CouponPoliciesGetResponse;
@@ -25,7 +26,7 @@ import shop.chaekmate.api.coupon.service.CouponService;
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 @RestController
-public class CouponAdminController {
+public class CouponAdminController implements CouponAdminControllerDocs {
     private final CouponService couponService;
 
     // TODO: 권한 제어 필요
