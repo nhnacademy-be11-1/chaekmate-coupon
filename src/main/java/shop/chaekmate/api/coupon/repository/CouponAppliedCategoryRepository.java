@@ -13,6 +13,6 @@ public interface CouponAppliedCategoryRepository
     List<CouponAppliedCategory> findAllByCouponPolicyId(long couponPolicyId);
 
     @Modifying
-    @Query("UPDATE CouponAppliedCategory cac SET cac.deletedAt = CURRENT_TIMESTAMP WHERE cac.couponPolicy = :couponPolicy AND cac.deletedAt IS NULL")
+    @Query("UPDATE CouponAppliedCategory cac SET cac.deletedAt = CURRENT_TIMESTAMP WHERE cac.couponPolicy = :couponPolicy")
     void softDeleteAllByCouponPolicy(@Param("couponPolicy") CouponPolicy couponPolicy);
 }
