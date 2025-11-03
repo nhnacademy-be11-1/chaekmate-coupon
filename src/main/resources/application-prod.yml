@@ -8,7 +8,7 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: ${EUREKA_URL_PROD} # ci-cd.yml 환경변수 추가 필요
+      defaultZone: ${EUREKA_URL_PROD}
 
 logging:
   level:
