@@ -1,11 +1,11 @@
 package shop.chaekmate.api.coupon.service.strategy;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.times;
 import static org.mockito.BDDMockito.verify;
+import static org.mockito.Mockito.doReturn;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -134,24 +134,35 @@ class CategoryCouponStrategyTest {
         CouponPolicy couponPolicy = createFakeCouponPolicy();
         given(categoryRepository.findAllByCouponPolicyId(couponPolicy.getId()))
                 .willReturn(List.of(
-                        new CouponAppliedCategory(couponPolicy, 1L),
-                        new CouponAppliedCategory(couponPolicy, 2L)
+                        new CouponAppliedCategory(couponPolicy, 3L),
+                        new CouponAppliedCategory(couponPolicy, 7L)
                 ));
 
-        List<CategoriesGetResponse> responses = List.of(
-                new CategoriesGetResponse(1L, "경제", 1),
-                new CategoriesGetResponse(2L, "경영", 2)
+        List<List<CategoriesGetResponse>> categoriesWithParents = List.of(
+                List.of(
+                        new CategoriesGetResponse(1L, "국내도서", 0),
+                        new CategoriesGetResponse(3L, "경영", 1)
+                ),
+                List.of(
+                        new CategoriesGetResponse(1L, "국내도서", 0),
+                        new CategoriesGetResponse(7L, "소설", 1)
+                )
         );
 
-        given(coreApiClient.getFullCategoriesById(eq(List.of(1L, 2L)))).willReturn(responses);
+        given(coreApiClient.getCategoriesWithParents(eq(List.of(3L, 7L))))
+                .willReturn(categoriesWithParents);
+
 
         // when
         CouponPolicyGetResponse result = strategy.get(couponPolicy);
 
         // then
         assertThat(result).isNotNull();
+        assertThat(result.couponAppliedTargetNames()).contains("국내도서 > 경영");
+        assertThat(result.couponAppliedTargetNames()).contains("국내도서 > 소설");
+
         verify(categoryRepository).findAllByCouponPolicyId(couponPolicy.getId());
-        verify(coreApiClient).getFullCategoriesById(eq(List.of(1L, 2L)));
+        verify(coreApiClient).getCategoriesWithParents(anyList());
     }
 
     private CouponPolicy createFakeCouponPolicy() {

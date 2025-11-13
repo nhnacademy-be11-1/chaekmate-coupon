@@ -41,11 +41,14 @@ public record CouponPolicyGetResponse(
         );
     }
 
-    public static CouponPolicyGetResponse ofCategory(CouponPolicy couponPolicy, List<CategoriesGetResponse> responses) {
+    public static CouponPolicyGetResponse ofCategory(CouponPolicy couponPolicy, List<List<CategoriesGetResponse>> responses) {
         String categoryNames = responses.stream()
-                .sorted(Comparator.comparingInt(CategoriesGetResponse::depth))
-                .map(CategoriesGetResponse::name)
-                .collect(Collectors.joining(" > "));
+                .map(path -> path.stream()
+                        .sorted(Comparator.comparingInt(CategoriesGetResponse::depth))
+                        .map(CategoriesGetResponse::name)
+                        .collect(Collectors.joining(" > "))
+                )
+                .collect(Collectors.joining(", "));
 
         return new CouponPolicyGetResponse(
                 couponPolicy.getId(),

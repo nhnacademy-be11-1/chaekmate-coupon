@@ -10,9 +10,9 @@ import shop.chaekmate.api.coupon.dto.response.CategoriesGetResponse;
 // TODO: 코어 서버 이름 정해지면 변경 고려
 @FeignClient(name = "core-api")
 public interface CoreApiClient {
-    @GetMapping("/categories")
-    List<CategoriesGetResponse> getFullCategoriesById(@RequestParam List<Long> categoryIds);
+    @GetMapping("/categories/bulk")
+    List<List<CategoriesGetResponse>> getCategoriesWithParents(@RequestParam List<Long> categoryIds);
 
-    @GetMapping("/books")
-    List<BooksGetResponse> getFullBooksById(@RequestParam List<Long> bookIds);
+    @GetMapping("/books/bulk")
+    List<BooksGetResponse> getBooksIds(@RequestParam List<Long> bookIds);
 }

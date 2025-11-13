@@ -57,7 +57,7 @@ public class CategoryCouponStrategy implements CouponTypeStrategy {
                 .map(CouponAppliedCategory::getCategoryId)
                 .toList();
 
-        List<CategoriesGetResponse> responses = coreApiClient.getFullCategoriesById(ids);
+        List<List<CategoriesGetResponse>> responses = coreApiClient.getCategoriesWithParents(ids);
         return CouponPolicyGetResponse.ofCategory(couponPolicy, responses);
     }
 }

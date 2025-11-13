@@ -148,14 +148,14 @@ class BookCouponStrategyTest {
                 new BooksGetResponse(102L, "Clean Code")
         );
 
-        given(coreApiClient.getFullBooksById(anyList())).willReturn(responses);
+        given(coreApiClient.getBooksIds(anyList())).willReturn(responses);
 
         // when
         CouponPolicyGetResponse result = strategy.get(couponPolicy);
 
         // then
         verify(couponAppliedBookRepository).findAllByCouponPolicyId(1L);
-        verify(coreApiClient).getFullBooksById(anyList());
+        verify(coreApiClient).getBooksIds(anyList());
 
         assertThat(result).isNotNull();
     }

@@ -57,7 +57,7 @@ public class BookCouponStrategy implements CouponTypeStrategy {
                 .map(CouponAppliedBook::getBookId)
                 .toList();
 
-        List<BooksGetResponse> responses = coreApiClient.getFullBooksById(ids);
+        List<BooksGetResponse> responses = coreApiClient.getBooksIds(ids);
 
         return CouponPolicyGetResponse.ofBook(couponPolicy, responses);
     }
