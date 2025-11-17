@@ -1,22 +1,17 @@
 package shop.chaekmate.api.coupon.entity;
 
-import static jakarta.persistence.FetchType.LAZY;
-import static jakarta.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.PROTECTED;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import shop.chaekmate.api.common.entity.BaseEntity;
+
+import java.time.LocalDateTime;
+
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Getter
 @Table(name = "issued_coupon")
@@ -43,5 +38,15 @@ public class IssuedCoupon extends BaseEntity {
 
     @Column(nullable = false)
     private LocalDateTime expiredAt;
-}
 
+    public IssuedCoupon(Long memberId, CouponPolicy couponPolicy, LocalDateTime issuedAt, LocalDateTime expiredAt) {
+        this.memberId = memberId;
+        this.couponPolicy = couponPolicy;
+        this.issuedAt = issuedAt;
+        this.expiredAt = expiredAt;
+    }
+
+    public void use() {
+        this.usedAt = LocalDateTime.now();
+    }
+}
