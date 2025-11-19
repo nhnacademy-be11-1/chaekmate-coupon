@@ -8,7 +8,6 @@ import shop.chaekmate.api.coupon.dto.response.CategoriesGetResponse;
 
 import java.util.List;
 
-// TODO: 코어 서버 이름 정해지면 변경 고려
 @FeignClient(name = "chaekmate-core")
 public interface CoreApiClient {
     @GetMapping("/categories/bulk")
