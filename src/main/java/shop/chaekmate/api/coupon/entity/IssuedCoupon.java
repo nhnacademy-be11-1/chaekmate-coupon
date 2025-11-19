@@ -39,11 +39,11 @@ public class IssuedCoupon extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime expiredAt;
 
-    public IssuedCoupon(Long memberId, CouponPolicy couponPolicy, LocalDateTime issuedAt, LocalDateTime expiredAt) {
+    public IssuedCoupon(Long memberId, CouponPolicy couponPolicy, LocalDateTime issuedAt) {
         this.memberId = memberId;
         this.couponPolicy = couponPolicy;
         this.issuedAt = issuedAt;
-        this.expiredAt = expiredAt;
+        this.expiredAt = couponPolicy.calculateExpiredAt(issuedAt);
     }
 
     public void use() {

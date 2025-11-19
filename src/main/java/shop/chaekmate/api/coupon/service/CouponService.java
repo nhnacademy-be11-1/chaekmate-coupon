@@ -1,6 +1,5 @@
 package shop.chaekmate.api.coupon.service;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -11,13 +10,17 @@ import shop.chaekmate.api.coupon.dto.response.CouponPoliciesGetResponse;
 import shop.chaekmate.api.coupon.dto.response.CouponPolicyGetResponse;
 import shop.chaekmate.api.coupon.entity.CouponPolicy;
 import shop.chaekmate.api.coupon.repository.CouponPolicyRepository;
+import shop.chaekmate.api.coupon.repository.IssuedCouponRepository;
 import shop.chaekmate.api.coupon.service.strategy.CouponStrategyFactory;
 import shop.chaekmate.api.coupon.service.strategy.CouponTypeStrategy;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CouponService {
     private final CouponPolicyRepository couponPolicyRepository;
+    private final IssuedCouponRepository issuedCouponRepository;
 
     private final CouponStrategyFactory couponStrategyFactory;
 

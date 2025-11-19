@@ -1,10 +1,11 @@
 package shop.chaekmate.api.coupon.dto.response;
 
+import shop.chaekmate.api.coupon.entity.CouponPolicy;
+
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import shop.chaekmate.api.coupon.entity.CouponPolicy;
 
 public record CouponPolicyGetResponse(
         long couponPolicyId,
@@ -18,7 +19,7 @@ public record CouponPolicyGetResponse(
         int discountValue,
         int minAvailableAmount,
         long maxAppliedAmount,
-        long remainingQuantity
+        Long remainingQuantity
 ) {
     public static CouponPolicyGetResponse ofBook(CouponPolicy couponPolicy, List<BooksGetResponse> responses) {
         String bookNames = responses.stream()

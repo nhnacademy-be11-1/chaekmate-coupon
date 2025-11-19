@@ -1,13 +1,5 @@
 package shop.chaekmate.api.coupon.service.strategy;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.times;
-import static org.mockito.BDDMockito.verify;
-import static org.mockito.Mockito.doReturn;
-
-import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -29,6 +21,12 @@ import shop.chaekmate.api.coupon.entity.type.CouponAppliedPeriodType;
 import shop.chaekmate.api.coupon.entity.type.CouponType;
 import shop.chaekmate.api.coupon.entity.type.DiscountType;
 import shop.chaekmate.api.coupon.repository.CouponAppliedCategoryRepository;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -80,7 +78,7 @@ class CategoryCouponStrategyTest {
                 10_000,
                 1_000,
                 50_000L,
-                100
+                100L
         );
 
         // when
@@ -105,7 +103,7 @@ class CategoryCouponStrategyTest {
                 20,
                 1000,
                 10000L,
-                50
+                50L
         );
 
         // when
@@ -176,7 +174,7 @@ class CategoryCouponStrategyTest {
                 5_000,
                 1_000,
                 50_000L,
-                100
+                100L
         );
         ReflectionTestUtils.setField(couponPolicy, "id", 1L);
         return couponPolicy;

@@ -21,7 +21,7 @@ public class IssuedCouponController {
 
     @GetMapping("/available")
     public ResponseEntity<List<IssuedCouponResponse>> getAvailableCoupons(
-            @RequestHeader("X-USER-ID") Long memberId) {
+            @RequestHeader("X-Member-Id") Long memberId) {
         List<IssuedCouponResponse> responses = issuedCouponService.getAvailableCoupons(memberId);
 
         return ResponseEntity.ok(responses);
@@ -29,7 +29,7 @@ public class IssuedCouponController {
 
     @GetMapping("/used")
     public ResponseEntity<List<UsedCouponResponse>> getUsedCoupons(
-            @RequestHeader("X-USER-ID") Long memberId) {
+            @RequestHeader("X-Member-Id") Long memberId) {
         List<UsedCouponResponse> responses = issuedCouponService.getUsedCoupons(memberId);
 
         return ResponseEntity.ok(responses);

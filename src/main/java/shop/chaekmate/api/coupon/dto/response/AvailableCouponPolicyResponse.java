@@ -12,7 +12,7 @@ public record AvailableCouponPolicyResponse(
         Integer minAvailableAmount,
         Long maxAppliedAmount,
         LocalDateTime appliedExpiredAt,
-        long remainingQuantity,
+        Long remainingQuantity,
         boolean alreadyIssued
 ) {
     public static AvailableCouponPolicyResponse from(CouponPolicy couponPolicy, boolean alreadyIssued) {

@@ -44,4 +44,18 @@ public class IssuedCouponRepositoryImpl implements IssuedCouponRepositoryCustom 
                 .orderBy(issuedCoupon.usedAt.desc())
                 .fetch();
     }
+
+    @Override
+    public boolean existsByMemberIdAndCouponPolicyId(Long memberId, Long couponPolicyId) {
+        Integer fetchOne = queryFactory
+                .selectOne()
+                .from(issuedCoupon)
+                .where(
+                        issuedCoupon.memberId.eq(memberId),
+                        issuedCoupon.couponPolicy.id.eq(couponPolicyId)
+                )
+                .fetchFirst();
+
+        return fetchOne != null;
+    }
 }
