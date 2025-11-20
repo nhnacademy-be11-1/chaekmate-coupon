@@ -179,8 +179,8 @@ class CouponAdminControllerTest {
                         .param("page", "0")
                         .param("size", "10"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name").value("목록쿠폰"))
-                .andExpect(jsonPath("$[0].discountType").value("정액"));
+                .andExpect(jsonPath("$.data[0].name").value("목록쿠폰"))
+                .andExpect(jsonPath("$.data[0].discountType").value("정액"));
     }
 
     @Test
@@ -221,7 +221,7 @@ class CouponAdminControllerTest {
         // when & then
         mockMvc.perform(get("/admin/coupon-policies/{id}", couponPolicy.getId()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("상세쿠폰"))
-                .andExpect(jsonPath("$.discountValue").value(3000));
+                .andExpect(jsonPath("$.data.name").value("상세쿠폰"))
+                .andExpect(jsonPath("$.data.discountValue").value(3000));
     }
 }

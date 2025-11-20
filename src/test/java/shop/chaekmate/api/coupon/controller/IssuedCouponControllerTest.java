@@ -62,11 +62,11 @@ class IssuedCouponControllerTest {
                         .header("X-Member-Id", memberId))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].couponName").value("신규 가입 쿠폰"))
-                .andExpect(jsonPath("$[0].discountDescription").value("5,000원 할인"))
-                .andExpect(jsonPath("$[1].couponName").value("생일 쿠폰"))
-                .andExpect(jsonPath("$[1].discountDescription").value("10% 할인"));
+                .andExpect(jsonPath("$.data", hasSize(2)))
+                .andExpect(jsonPath("$.data[0].couponName").value("신규 가입 쿠폰"))
+                .andExpect(jsonPath("$.data[0].discountDescription").value("5,000원 할인"))
+                .andExpect(jsonPath("$.data[1].couponName").value("생일 쿠폰"))
+                .andExpect(jsonPath("$.data[1].discountDescription").value("10% 할인"));
     }
 
     @Test
@@ -79,7 +79,7 @@ class IssuedCouponControllerTest {
                         .header("X-Member-Id", memberId))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(0)));
+                .andExpect(jsonPath("$.data", hasSize(0)));
     }
 
     @Test
@@ -98,7 +98,7 @@ class IssuedCouponControllerTest {
                         .header("X-Member-Id", memberId))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(0)));
+                .andExpect(jsonPath("$.data", hasSize(0)));
     }
 
     @Test
@@ -115,10 +115,10 @@ class IssuedCouponControllerTest {
                         .header("X-Member-Id", memberId))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].couponName").value("크리스마스 쿠폰"))
-                .andExpect(jsonPath("$[0].discountDescription").value("10,000원 할인"))
-                .andExpect(jsonPath("$[0].usedAt").exists());
+                .andExpect(jsonPath("$.data", hasSize(1)))
+                .andExpect(jsonPath("$.data[0].couponName").value("크리스마스 쿠폰"))
+                .andExpect(jsonPath("$.data[0].discountDescription").value("10,000원 할인"))
+                .andExpect(jsonPath("$.data[0].usedAt").exists());
     }
 
     @Test
@@ -131,7 +131,7 @@ class IssuedCouponControllerTest {
                         .header("X-Member-Id", memberId))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(0)));
+                .andExpect(jsonPath("$.data", hasSize(0)));
     }
 
     @Test
@@ -148,7 +148,7 @@ class IssuedCouponControllerTest {
                         .header("X-Member-Id", memberId))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(0)));
+                .andExpect(jsonPath("$.data", hasSize(0)));
     }
 
     private CouponPolicy saveCouponPolicy(String name, DiscountType discountType, int discountValue) {

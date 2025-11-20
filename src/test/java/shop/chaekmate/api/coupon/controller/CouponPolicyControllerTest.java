@@ -55,11 +55,11 @@ class CouponPolicyControllerTest {
                         .header("X-Member-Id", memberId))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].couponName").value("IT 도서 20% 할인"))
-                .andExpect(jsonPath("$[0].alreadyIssued").value(false))
-                .andExpect(jsonPath("$[1].couponName").value("베스트셀러 10% 할인"))
-                .andExpect(jsonPath("$[1].alreadyIssued").value(false));
+                .andExpect(jsonPath("$.data", hasSize(2)))
+                .andExpect(jsonPath("$.data[0].couponName").value("IT 도서 20% 할인"))
+                .andExpect(jsonPath("$.data[0].alreadyIssued").value(false))
+                .andExpect(jsonPath("$.data[1].couponName").value("베스트셀러 10% 할인"))
+                .andExpect(jsonPath("$.data[1].alreadyIssued").value(false));
     }
 
     @Test
@@ -74,7 +74,7 @@ class CouponPolicyControllerTest {
                         .header("X-Member-Id", memberId))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].alreadyIssued").value(true));
+                .andExpect(jsonPath("$.data[0].alreadyIssued").value(true));
     }
 
     @Test
@@ -88,8 +88,8 @@ class CouponPolicyControllerTest {
                         .header("X-Member-Id", memberId))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))  // BOOK만
-                .andExpect(jsonPath("$[0].couponName").value("베스트셀러 쿠폰"));
+                .andExpect(jsonPath("$.data", hasSize(1)))  // BOOK만
+                .andExpect(jsonPath("$.data[0].couponName").value("베스트셀러 쿠폰"));
     }
 
     @Test
@@ -100,7 +100,7 @@ class CouponPolicyControllerTest {
                         .header("X-Member-Id", memberId))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(0)));
+                .andExpect(jsonPath("$.data", hasSize(0)));
     }
 
     private CouponPolicy saveCouponPolicy(String name, CouponType type) {
