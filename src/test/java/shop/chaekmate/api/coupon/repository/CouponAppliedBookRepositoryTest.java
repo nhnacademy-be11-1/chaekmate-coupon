@@ -1,9 +1,5 @@
 package shop.chaekmate.api.coupon.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.time.LocalDateTime;
-import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -12,15 +8,20 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
-import shop.chaekmate.api.config.JpaConfig;
+import shop.chaekmate.api.config.QueryDslConfig;
 import shop.chaekmate.api.coupon.entity.CouponAppliedBook;
 import shop.chaekmate.api.coupon.entity.CouponPolicy;
 import shop.chaekmate.api.coupon.entity.type.CouponAppliedPeriodType;
 import shop.chaekmate.api.coupon.entity.type.CouponType;
 import shop.chaekmate.api.coupon.entity.type.DiscountType;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 @DataJpaTest
-@Import(JpaConfig.class)
+@Import(QueryDslConfig.class)
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CouponAppliedBookRepositoryTest {
@@ -47,7 +48,7 @@ class CouponAppliedBookRepositoryTest {
                 5000,
                 1000,
                 50000L,
-                100
+                100L
         ));
 
         List<CouponAppliedBook> books = List.of(

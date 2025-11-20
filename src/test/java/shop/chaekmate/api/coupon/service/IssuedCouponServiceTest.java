@@ -112,7 +112,7 @@ class IssuedCouponServiceTest {
         CouponPolicy policy = createCouponPolicy(policyName, discountType, discountValue);
         LocalDateTime now = LocalDateTime.now();
 
-        return new IssuedCoupon(memberId, policy, now, now.plusDays(30));
+        return new IssuedCoupon(memberId, policy, now);
     }
 
     private IssuedCoupon createUsedCoupon(Long memberId, String policyName,
@@ -120,7 +120,7 @@ class IssuedCouponServiceTest {
         CouponPolicy policy = createCouponPolicy(policyName, discountType, discountValue);
         LocalDateTime now = LocalDateTime.now();
 
-        IssuedCoupon coupon = new IssuedCoupon(memberId, policy, now.minusDays(10), now.plusDays(20));
+        IssuedCoupon coupon = new IssuedCoupon(memberId, policy, now.minusDays(10));
         coupon.use();
 
         return coupon;
@@ -133,7 +133,7 @@ class IssuedCouponServiceTest {
                 CouponAppliedPeriodType.THIRTY_DAYS,
                 null, null,
                 discountType, discountValue,
-                10000, 100000L, 100
+                10000, 100000L, 100L
         );
     }
 }

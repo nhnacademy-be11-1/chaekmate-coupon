@@ -2,33 +2,34 @@ spring:
   application:
     name: chaekmate-coupon
 
-  datasource:
-    url: jdbc:h2:mem:chaekmate;MODE=MySQL;
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-  jpa:
-    open-in-view: false
-    show-sql: true
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
-        format_sql: true
-        use_sql_comments: true
-        highlight_sql: true
-        auto_quote_keyword: true
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
 
-logging:
-  level:
-    org.hibernate.SQL: debug
-    org.hibernate.orm.jdbc.bind: trace
-    org.springframework.transaction.interceptor: trace
+    rabbitmq:
+      host: ${RABBITMQ_HOST}
+      port: ${RABBITMQ_PORT}
+      username: ${RABBITMQ_USERNAME}
+      password: ${RABBITMQ_PASSWORD}
+
+    data:
+      redis:
+        host: ${REDIS_HOST}
+        password: ${REDIS_PASSWORD}
+        port: ${REDIS_PORT}
+        database: ${REDIS_RANGE}
+
+  springdoc:
+    api-docs:
+      path: /v3/api-docs
+    swagger-ui:
+      path: /swagger-ui.html
+      enabled: true
+
+  eureka:
+    client:
+      register-with-eureka: true
+      fetch-registry: true
+
+    instance:
+      prefer-ip-address: true
 
 eureka:
   client:

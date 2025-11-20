@@ -1,19 +1,17 @@
 package shop.chaekmate.api.coupon.dto.request;
 
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
-import java.time.LocalDateTime;
-import java.util.List;
+import jakarta.validation.constraints.*;
 import shop.chaekmate.api.coupon.entity.CouponPolicy;
 import shop.chaekmate.api.coupon.entity.type.CouponAppliedPeriodType;
 import shop.chaekmate.api.coupon.entity.type.CouponType;
 import shop.chaekmate.api.coupon.entity.type.DiscountType;
+import shop.chaekmate.api.coupon.validation.CouponPolicyDateValidatable;
+import shop.chaekmate.api.coupon.validation.annotation.ValidCouponPolicyDates;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+@ValidCouponPolicyDates
 public record CouponPolicyCreateRequest(
         @NotBlank(message = "쿠폰 이름은 필수입니다.")
         @Size(max = 100, message = "쿠폰 이름은 최대 100자까지 가능합니다.")
@@ -27,12 +25,7 @@ public record CouponPolicyCreateRequest(
 
         List<Long> ids,
 
-        @NotNull(message = "쿠폰 적용 시작일은 필수입니다.")
-        @FutureOrPresent(message = "쿠폰 적용 시작일은 현재보다 이후여야 합니다.")
         LocalDateTime appliedStartedAt,
-
-        @NotNull(message = "쿠폰 적용 종료일은 필수입니다.")
-        @Future(message = "쿠폰 적용 종료일은 현재보다 이후여야 합니다.")
         LocalDateTime appliedExpiredAt,
 
         @NotNull(message = "할인 유형은 필수입니다.")
@@ -48,8 +41,9 @@ public record CouponPolicyCreateRequest(
         Long maxAppliedAmount,
 
         @PositiveOrZero(message = "남은 수량은 0 이상이어야 합니다.")
-        long remainingQuantity
-) {
+        Long remainingQuantity
+) implements CouponPolicyDateValidatable {
+
     public CouponPolicy toCouponPolicy() {
         return new CouponPolicy(
                 name,

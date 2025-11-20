@@ -18,4 +18,8 @@ public interface IssuedCouponRepositoryCustom {
         사용한 쿠폰
      */
     List<IssuedCoupon> findUsedCouponsByMemberId(Long memberId);
+
+    // 특정 회원이 특정 쿠폰을 발급 받은 적이 있는지 확인
+    boolean existsByMemberIdAndCouponPolicyId(Long memberId, Long couponPolicyId);
+
 }

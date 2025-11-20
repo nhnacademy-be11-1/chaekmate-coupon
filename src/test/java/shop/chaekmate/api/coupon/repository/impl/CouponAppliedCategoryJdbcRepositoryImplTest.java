@@ -1,8 +1,5 @@
 package shop.chaekmate.api.coupon.repository.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -10,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
-import shop.chaekmate.api.config.JpaConfig;
+import shop.chaekmate.api.config.QueryDslConfig;
 import shop.chaekmate.api.coupon.entity.CouponAppliedCategory;
 import shop.chaekmate.api.coupon.entity.CouponPolicy;
 import shop.chaekmate.api.coupon.entity.type.CouponAppliedPeriodType;
@@ -19,9 +16,13 @@ import shop.chaekmate.api.coupon.entity.type.DiscountType;
 import shop.chaekmate.api.coupon.repository.CouponAppliedCategoryJdbcRepository;
 import shop.chaekmate.api.coupon.repository.CouponPolicyRepository;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 @DataJpaTest
 @SuppressWarnings("NonAsciiCharacters")
-@Import({CouponAppliedCategoryJdbcRepositoryImpl.class, JpaConfig.class})
+@Import({CouponAppliedCategoryJdbcRepositoryImpl.class, QueryDslConfig.class})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CouponAppliedCategoryJdbcRepositoryImplTest {
     @Autowired
@@ -46,7 +47,7 @@ class CouponAppliedCategoryJdbcRepositoryImplTest {
                 5_000,
                 1_000,
                 50_000L,
-                100
+                100L
         );
 
         couponPolicyRepository.save(couponPolicy);

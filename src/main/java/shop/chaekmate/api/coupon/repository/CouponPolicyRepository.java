@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import shop.chaekmate.api.coupon.entity.CouponPolicy;
 import shop.chaekmate.api.coupon.exception.NotFoundCouponPolicy;
 
-public interface CouponPolicyRepository extends JpaRepository<CouponPolicy, Long> {
+public interface CouponPolicyRepository extends JpaRepository<CouponPolicy, Long>, CouponPolicyRepositoryCustom {
     default CouponPolicy getById(long couponPolicyId) {
         return findById(couponPolicyId)
                 .orElseThrow(() -> new NotFoundCouponPolicy(couponPolicyId));

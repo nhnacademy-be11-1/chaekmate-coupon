@@ -1,16 +1,6 @@
 package shop.chaekmate.api.coupon.entity;
 
-import static jakarta.persistence.EnumType.STRING;
-import static jakarta.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.PROTECTED;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
@@ -19,6 +9,13 @@ import shop.chaekmate.api.common.entity.BaseEntity;
 import shop.chaekmate.api.coupon.entity.type.CouponAppliedPeriodType;
 import shop.chaekmate.api.coupon.entity.type.CouponType;
 import shop.chaekmate.api.coupon.entity.type.DiscountType;
+
+import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
+
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Getter
 @Table(name = "coupon_policy")
@@ -59,8 +56,7 @@ public class CouponPolicy extends BaseEntity {
     @Column(nullable = false)
     private Long maxAppliedAmount;
 
-    @Column(nullable = false)
-    private long remainingQuantity;
+    private Long remainingQuantity;
 
     public CouponPolicy(
             String name,
@@ -72,7 +68,7 @@ public class CouponPolicy extends BaseEntity {
             int discountValue,
             Integer minAvailableAmount,
             Long maxAppliedAmount,
-            long remainingQuantity
+            Long remainingQuantity
     ) {
         this.name = name;
         this.type = type;
@@ -96,7 +92,7 @@ public class CouponPolicy extends BaseEntity {
             int discountValue,
             Integer minAvailableAmount,
             Long maxAppliedAmount,
-            long remainingQuantity
+            Long remainingQuantity
     ) {
         this.name = name;
         this.type = type;
@@ -108,5 +104,22 @@ public class CouponPolicy extends BaseEntity {
         this.minAvailableAmount = minAvailableAmount;
         this.maxAppliedAmount = maxAppliedAmount;
         this.remainingQuantity = remainingQuantity;
+    }
+
+    public LocalDateTime calculateExpiredAt(LocalDateTime issuedAt) {
+        return switch (this.appliedPeriodType) {
+            case THIRTY_DAYS -> issuedAt.plusDays(30L);
+            case MONTH_LAST_DAY -> issuedAt.with(TemporalAdjusters.lastDayOfMonth())
+                    .withHour(23).withMinute(59).withSecond(59);
+            case CUSTOM_PERIOD -> this.appliedExpiredAt;
+        };
+    }
+
+    public boolean isUnlimited() {
+        return this.remainingQuantity == null;
+    }
+
+    public boolean isAvailable() {
+        return isUnlimited() || this.remainingQuantity > 0;
     }
 }

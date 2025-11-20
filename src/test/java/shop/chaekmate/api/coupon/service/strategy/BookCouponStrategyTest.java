@@ -1,13 +1,5 @@
 package shop.chaekmate.api.coupon.service.strategy;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-
-import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -29,6 +21,13 @@ import shop.chaekmate.api.coupon.entity.type.CouponAppliedPeriodType;
 import shop.chaekmate.api.coupon.entity.type.CouponType;
 import shop.chaekmate.api.coupon.entity.type.DiscountType;
 import shop.chaekmate.api.coupon.repository.CouponAppliedBookRepository;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -80,7 +79,7 @@ class BookCouponStrategyTest {
                 1_000,
                 500,
                 10_000L,
-                100
+                100L
         );
 
         // when
@@ -105,7 +104,7 @@ class BookCouponStrategyTest {
                 2_000,
                 500,
                 10_000L,
-                100
+                100L
         );
 
         // when
@@ -170,7 +169,7 @@ class BookCouponStrategyTest {
                 1_000,
                 500,
                 10_000L,
-                100
+                100L
         );
 
         ReflectionTestUtils.setField(policy, "id", 1L);

@@ -59,7 +59,7 @@ class IssuedCouponControllerTest {
 
         // when, then
         mockMvc.perform(get("/issued-coupons/available")
-                        .header("X-USER-ID", memberId))
+                        .header("X-Member-Id", memberId))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
@@ -76,7 +76,7 @@ class IssuedCouponControllerTest {
 
         // when, then
         mockMvc.perform(get("/issued-coupons/available")
-                        .header("X-USER-ID", memberId))
+                        .header("X-Member-Id", memberId))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
@@ -95,7 +95,7 @@ class IssuedCouponControllerTest {
 
         // when, then
         mockMvc.perform(get("/issued-coupons/available")
-                        .header("X-USER-ID", memberId))
+                        .header("X-Member-Id", memberId))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
@@ -112,7 +112,7 @@ class IssuedCouponControllerTest {
 
         // when, then
         mockMvc.perform(get("/issued-coupons/used")
-                        .header("X-USER-ID", memberId))
+                        .header("X-Member-Id", memberId))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
@@ -128,7 +128,7 @@ class IssuedCouponControllerTest {
 
         // when, then
         mockMvc.perform(get("/issued-coupons/used")
-                        .header("X-USER-ID", memberId))
+                        .header("X-Member-Id", memberId))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
@@ -145,7 +145,7 @@ class IssuedCouponControllerTest {
 
         // when, then
         mockMvc.perform(get("/issued-coupons/used")
-                        .header("X-USER-ID", memberId))
+                        .header("X-Member-Id", memberId))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
@@ -154,25 +154,25 @@ class IssuedCouponControllerTest {
     private CouponPolicy saveCouponPolicy(String name, DiscountType discountType, int discountValue) {
         CouponPolicy policy = new CouponPolicy(
                 name, CouponType.WELCOME, CouponAppliedPeriodType.THIRTY_DAYS,
-                null, null, discountType, discountValue, 10000, 100000L, 100
+                null, null, discountType, discountValue, 10000, 100000L, 100L
         );
         return couponPolicyRepository.save(policy);
     }
 
     private IssuedCoupon createAvailableCoupon(Long memberId, CouponPolicy policy) {
         LocalDateTime now = LocalDateTime.now();
-        return new IssuedCoupon(memberId, policy, now, now.plusDays(30));
+        return new IssuedCoupon(memberId, policy, now);
     }
 
     private IssuedCoupon createUsedCoupon(Long memberId, CouponPolicy policy) {
         LocalDateTime now = LocalDateTime.now();
-        IssuedCoupon coupon = new IssuedCoupon(memberId, policy, now.minusDays(10), now.plusDays(20));
+        IssuedCoupon coupon = new IssuedCoupon(memberId, policy, now.minusDays(10));
         coupon.use();
         return coupon;
     }
 
     private IssuedCoupon createExpiredCoupon(Long memberId, CouponPolicy policy) {
-        LocalDateTime now = LocalDateTime.now();
-        return new IssuedCoupon(memberId, policy, now.minusDays(10), now.minusDays(1));
+        LocalDateTime issuedAt = LocalDateTime.now().minusDays(40);
+        return new IssuedCoupon(memberId, policy, issuedAt);
     }
 }

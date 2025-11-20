@@ -1,20 +1,6 @@
 package shop.chaekmate.api.coupon.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.time.LocalDateTime;
-import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -36,6 +22,16 @@ import shop.chaekmate.api.coupon.entity.type.DiscountType;
 import shop.chaekmate.api.coupon.repository.CouponPolicyRepository;
 import shop.chaekmate.api.coupon.service.strategy.CouponStrategyFactory;
 import shop.chaekmate.api.coupon.service.strategy.CouponTypeStrategy;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @Rollback
@@ -70,7 +66,7 @@ class CouponAdminControllerTest {
                 5_000,
                 1_000,
                 50_000L,
-                100
+                100L
         );
 
         given(couponStrategyFactory.getStrategy(any())).willReturn(mock(CouponTypeStrategy.class));
@@ -102,7 +98,7 @@ class CouponAdminControllerTest {
                 5_000,
                 1_000,
                 50_000L,
-                100
+                100L
         ));
 
         CouponPolicyUpdateRequest request = new CouponPolicyUpdateRequest(
@@ -116,7 +112,7 @@ class CouponAdminControllerTest {
                 10,
                 0,
                 20_000L,
-                50
+                50L
         );
 
         CouponTypeStrategy mockStrategy = mock(CouponTypeStrategy.class);
@@ -148,7 +144,7 @@ class CouponAdminControllerTest {
                 5_000,
                 1_000,
                 50_000L,
-                100
+                100L
         ));
 
         given(couponStrategyFactory.getStrategy(any())).willReturn(mock(CouponTypeStrategy.class));
@@ -175,7 +171,7 @@ class CouponAdminControllerTest {
                 3_000,
                 1_000,
                 50_000L,
-                100
+                100L
         ));
 
         // when & then
@@ -200,7 +196,7 @@ class CouponAdminControllerTest {
                 3_000,
                 1_000,
                 50_000L,
-                100
+                100L
         ));
 
         CouponTypeStrategy mockStrategy = mock(CouponTypeStrategy.class);
