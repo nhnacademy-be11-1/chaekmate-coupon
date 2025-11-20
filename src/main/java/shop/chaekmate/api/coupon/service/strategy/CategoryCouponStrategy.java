@@ -1,9 +1,9 @@
 package shop.chaekmate.api.coupon.service.strategy;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import shop.chaekmate.api.client.CoreApiClient;
+import shop.chaekmate.api.common.dto.CommonResponse;
 import shop.chaekmate.api.coupon.dto.request.CouponPolicyCreateRequest;
 import shop.chaekmate.api.coupon.dto.request.CouponPolicyUpdateRequest;
 import shop.chaekmate.api.coupon.dto.response.CategoriesGetResponse;
@@ -12,6 +12,8 @@ import shop.chaekmate.api.coupon.entity.CouponAppliedCategory;
 import shop.chaekmate.api.coupon.entity.CouponPolicy;
 import shop.chaekmate.api.coupon.entity.type.CouponType;
 import shop.chaekmate.api.coupon.repository.CouponAppliedCategoryRepository;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -57,7 +59,7 @@ public class CategoryCouponStrategy implements CouponTypeStrategy {
                 .map(CouponAppliedCategory::getCategoryId)
                 .toList();
 
-        List<List<CategoriesGetResponse>> responses = coreApiClient.getCategoriesWithParents(ids);
-        return CouponPolicyGetResponse.ofCategory(couponPolicy, responses);
+        CommonResponse<List<List<CategoriesGetResponse>>> responses = coreApiClient.getCategoriesWithParents(ids);
+        return CouponPolicyGetResponse.ofCategory(couponPolicy, responses.data());
     }
 }

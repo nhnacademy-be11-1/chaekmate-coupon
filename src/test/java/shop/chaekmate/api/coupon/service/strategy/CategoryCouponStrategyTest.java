@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import shop.chaekmate.api.client.CoreApiClient;
+import shop.chaekmate.api.common.dto.CommonResponse;
 import shop.chaekmate.api.coupon.dto.request.CouponPolicyCreateRequest;
 import shop.chaekmate.api.coupon.dto.request.CouponPolicyUpdateRequest;
 import shop.chaekmate.api.coupon.dto.response.CategoriesGetResponse;
@@ -136,7 +137,7 @@ class CategoryCouponStrategyTest {
                         new CouponAppliedCategory(couponPolicy, 7L)
                 ));
 
-        List<List<CategoriesGetResponse>> categoriesWithParents = List.of(
+        List<List<CategoriesGetResponse>> categoriesData = List.of( // 변수 이름 변경
                 List.of(
                         new CategoriesGetResponse(1L, "국내도서", 0),
                         new CategoriesGetResponse(3L, "경영", 1)
@@ -147,9 +148,11 @@ class CategoryCouponStrategyTest {
                 )
         );
 
-        given(coreApiClient.getCategoriesWithParents(eq(List.of(3L, 7L))))
-                .willReturn(categoriesWithParents);
+        CommonResponse<List<List<CategoriesGetResponse>>> mockResponse =
+                new CommonResponse<>(null, "200", categoriesData);
 
+        given(coreApiClient.getCategoriesWithParents(eq(List.of(3L, 7L))))
+                .willReturn(mockResponse);
 
         // when
         CouponPolicyGetResponse result = strategy.get(couponPolicy);
