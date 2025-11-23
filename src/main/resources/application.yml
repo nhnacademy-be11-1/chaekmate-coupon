@@ -14,7 +14,7 @@ spring:
         host: ${REDIS_HOST}
         password: ${REDIS_PASSWORD}
         port: ${REDIS_PORT}
-        database: ${REDIS_RANGE}
+        database: ${REDIS_RANGE:304}
 
   springdoc:
     api-docs:
