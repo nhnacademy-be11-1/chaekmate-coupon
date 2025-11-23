@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.util.ReflectionTestUtils;
 import shop.chaekmate.api.client.CoreApiClient;
 import shop.chaekmate.api.common.dto.CommonResponse;
@@ -29,6 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
 
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -151,7 +153,7 @@ class CategoryCouponStrategyTest {
         CommonResponse<List<List<CategoriesGetResponse>>> mockResponse =
                 new CommonResponse<>(null, "200", categoriesData);
 
-        given(coreApiClient.getCategoriesWithParents(eq(List.of(3L, 7L))))
+        given(coreApiClient.getCategoriesWithParents(List.of(3L, 7L)))
                 .willReturn(mockResponse);
 
         // when

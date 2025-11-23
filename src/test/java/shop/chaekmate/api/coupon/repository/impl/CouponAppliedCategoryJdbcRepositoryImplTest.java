@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.ActiveProfiles;
 import shop.chaekmate.api.config.QueryDslConfig;
 import shop.chaekmate.api.coupon.entity.CouponAppliedCategory;
 import shop.chaekmate.api.coupon.entity.CouponPolicy;
@@ -21,6 +22,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@ActiveProfiles("test")
 @SuppressWarnings("NonAsciiCharacters")
 @Import({CouponAppliedCategoryJdbcRepositoryImpl.class, QueryDslConfig.class})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
