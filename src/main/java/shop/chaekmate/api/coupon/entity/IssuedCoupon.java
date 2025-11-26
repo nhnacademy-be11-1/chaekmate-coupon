@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import shop.chaekmate.api.common.entity.BaseEntity;
+import shop.chaekmate.api.coupon.entity.type.DiscountType;
 
 import java.time.LocalDateTime;
 
@@ -48,5 +49,36 @@ public class IssuedCoupon extends BaseEntity {
 
     public void use() {
         this.usedAt = LocalDateTime.now();
+    }
+
+    public int calculateDiscountAmount(int orderAmount) {
+        CouponPolicy policy = this.couponPolicy;
+
+        if (orderAmount < policy.getMinAvailableAmount()) {
+            throw new IllegalArgumentException(
+                    "최소 구매 금액은 " + policy.getMinAvailableAmount() + "원입니다."
+            );
+        }
+
+        int discountAmount;
+
+        if (policy.getDiscountType() == DiscountType.RATE) {
+            discountAmount = (int) (orderAmount * (policy.getDiscountValue() / 100.0));
+        } else {
+            discountAmount = policy.getDiscountValue();
+        }
+
+        Long maxAppliedAmount = policy.getMaxAppliedAmount();
+        if (maxAppliedAmount != null) {
+            if (discountAmount > maxAppliedAmount.intValue()) {
+                discountAmount = maxAppliedAmount.intValue();
+            }
+        }
+
+        if (discountAmount > orderAmount) {
+            discountAmount = orderAmount;
+        }
+
+        return discountAmount;
     }
 }
