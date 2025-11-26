@@ -20,8 +20,8 @@ import shop.chaekmate.api.coupon.entity.type.CouponAppliedPeriodType;
 import shop.chaekmate.api.coupon.entity.type.CouponType;
 import shop.chaekmate.api.coupon.entity.type.DiscountType;
 import shop.chaekmate.api.coupon.repository.CouponPolicyRepository;
-import shop.chaekmate.api.coupon.service.strategy.CouponStrategyFactory;
-import shop.chaekmate.api.coupon.service.strategy.CouponTypeStrategy;
+import shop.chaekmate.api.coupon.service.strategy.admin.CouponStrategyFactory;
+import shop.chaekmate.api.coupon.service.strategy.admin.CouponTypeStrategy;
 
 import java.time.LocalDateTime;
 import java.util.List;

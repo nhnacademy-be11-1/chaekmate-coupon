@@ -1,4 +1,4 @@
-package shop.chaekmate.api.coupon.service.strategy;
+package shop.chaekmate.api.coupon.service.strategy.admin;
 
 import shop.chaekmate.api.coupon.dto.request.CouponPolicyCreateRequest;
 import shop.chaekmate.api.coupon.dto.request.CouponPolicyUpdateRequest;

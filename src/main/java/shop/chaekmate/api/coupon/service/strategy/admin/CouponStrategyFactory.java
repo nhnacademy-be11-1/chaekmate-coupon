@@ -1,10 +1,11 @@
-package shop.chaekmate.api.coupon.service.strategy;
+package shop.chaekmate.api.coupon.service.strategy.admin;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import shop.chaekmate.api.coupon.entity.type.CouponType;
 import shop.chaekmate.api.coupon.exception.InvalidCouponType;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
