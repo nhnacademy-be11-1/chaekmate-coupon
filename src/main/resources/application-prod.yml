@@ -1,9 +1,5 @@
 # Coupon/Eureka Server Port (prod) : "배포설명" 확인
 
-# Coupon Server Port
-server:
-  port: ${PORT_NUMBER}
-
 # Eureka Server URL
 eureka:
   client:
