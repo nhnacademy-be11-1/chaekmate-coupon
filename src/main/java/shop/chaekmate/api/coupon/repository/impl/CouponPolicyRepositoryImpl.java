@@ -11,6 +11,8 @@ import shop.chaekmate.api.coupon.repository.CouponPolicyRepositoryCustom;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static shop.chaekmate.api.coupon.entity.QCouponAppliedBook.couponAppliedBook;
+import static shop.chaekmate.api.coupon.entity.QCouponAppliedCategory.couponAppliedCategory;
 import static shop.chaekmate.api.coupon.entity.QCouponPolicy.couponPolicy;
 
 @Repository
@@ -28,6 +30,39 @@ public class CouponPolicyRepositoryImpl implements CouponPolicyRepositoryCustom 
                         isWithinIssuePeriod(now),
                         hasRemainingQuantity()
                 )
+                .orderBy(couponPolicy.createdAt.desc())
+                .fetch();
+    }
+
+    @Override
+    public List<CouponPolicy> findAvailableCouponPoliciesByBookId(Long bookId, LocalDateTime now) {
+        return queryFactory
+                .selectFrom(couponPolicy)
+                .join(couponAppliedBook).on(couponAppliedBook.couponPolicy.eq(couponPolicy))
+                .where(
+                        couponPolicy.type.eq(CouponType.BOOK),
+                        couponAppliedBook.bookId.eq(bookId),
+                        isWithinIssuePeriod(now)
+                )
+                .distinct()
+                .orderBy(couponPolicy.createdAt.desc())
+                .fetch();
+    }
+
+    @Override
+    public List<CouponPolicy> findAvailableCouponPoliciesByCategoryIds(List<Long> categoryIds, LocalDateTime now) {
+        if (categoryIds == null || categoryIds.isEmpty()) {
+            return List.of();
+        }
+        return queryFactory
+                .selectFrom(couponPolicy)
+                .join(couponAppliedCategory).on(couponAppliedCategory.couponPolicy.eq(couponPolicy))
+                .where(
+                        couponPolicy.type.eq(CouponType.CATEGORY),
+                        couponAppliedCategory.categoryId.in(categoryIds),
+                        isWithinIssuePeriod(now)
+                )
+                .distinct()
                 .orderBy(couponPolicy.createdAt.desc())
                 .fetch();
     }

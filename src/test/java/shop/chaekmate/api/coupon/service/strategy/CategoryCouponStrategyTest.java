@@ -23,6 +23,7 @@ import shop.chaekmate.api.coupon.entity.type.CouponAppliedPeriodType;
 import shop.chaekmate.api.coupon.entity.type.CouponType;
 import shop.chaekmate.api.coupon.entity.type.DiscountType;
 import shop.chaekmate.api.coupon.repository.CouponAppliedCategoryRepository;
+import shop.chaekmate.api.coupon.service.strategy.admin.CategoryCouponStrategy;
 
 import java.util.List;
 

@@ -1,6 +1,5 @@
-package shop.chaekmate.api.coupon.service.strategy;
+package shop.chaekmate.api.coupon.service.strategy.admin;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import shop.chaekmate.api.client.CoreApiClient;
@@ -12,6 +11,8 @@ import shop.chaekmate.api.coupon.entity.CouponAppliedBook;
 import shop.chaekmate.api.coupon.entity.CouponPolicy;
 import shop.chaekmate.api.coupon.entity.type.CouponType;
 import shop.chaekmate.api.coupon.repository.CouponAppliedBookRepository;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor

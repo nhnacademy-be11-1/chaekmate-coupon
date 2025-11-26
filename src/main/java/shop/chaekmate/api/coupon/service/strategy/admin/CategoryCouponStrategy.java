@@ -1,4 +1,4 @@
-package shop.chaekmate.api.coupon.service.strategy;
+package shop.chaekmate.api.coupon.service.strategy.admin;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

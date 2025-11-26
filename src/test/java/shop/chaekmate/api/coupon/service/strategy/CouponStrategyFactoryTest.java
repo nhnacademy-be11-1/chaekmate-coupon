@@ -14,6 +14,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 import shop.chaekmate.api.coupon.entity.type.CouponType;
 import shop.chaekmate.api.coupon.exception.InvalidCouponType;
+import shop.chaekmate.api.coupon.service.strategy.admin.CouponStrategyFactory;
+import shop.chaekmate.api.coupon.service.strategy.admin.CouponTypeStrategy;
 
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
