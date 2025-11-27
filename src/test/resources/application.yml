@@ -35,3 +35,7 @@ eureka:
     enabled: false
 
 jdbc-template-batch-size: ${JDBC_BATCH_SIZE:100}
+
+chaekmate:
+  logstorage:
+    enabled: false
