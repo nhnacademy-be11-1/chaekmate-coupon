@@ -1,6 +1,12 @@
 spring:
   application:
     name: chaekmate-coupon
+  config:
+    import: "optional:configserver:"    # configserver import 활성화
+
+  cloud:
+    config:
+      enabled: false # Config server 사용 설정 기본 비활성화
 
 
     rabbitmq:
@@ -40,9 +46,21 @@ eureka:
 
 jdbc-template-batch-size: ${JDBC_BATCH_SIZE:100}
 
-
+# Spring Boot Actuator 서버 상태(헬스) 모니터링
 management:
   endpoints:
     web:
       exposure:
-        include: health, info
+        include: "*"
+  health:
+    db:
+      enabled: true
+    redis:
+      enabled: false
+    rabbit:
+      enabled: true
+  info:
+    env:
+      enabled: true
+info:
+  instanceId: ${spring.application.name}:${server.port}
