@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.util.ReflectionTestUtils;
 import shop.chaekmate.api.client.CoreApiClient;
+import shop.chaekmate.api.common.dto.CommonResponse;
 import shop.chaekmate.api.coupon.dto.request.CouponPolicyCreateRequest;
 import shop.chaekmate.api.coupon.dto.request.CouponPolicyUpdateRequest;
 import shop.chaekmate.api.coupon.dto.response.BooksGetResponse;
@@ -24,6 +25,7 @@ import shop.chaekmate.api.coupon.entity.type.DiscountType;
 import shop.chaekmate.api.coupon.repository.CouponAppliedBookRepository;
 import shop.chaekmate.api.coupon.service.strategy.admin.BookCouponStrategy;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -150,7 +152,9 @@ class BookCouponStrategyTest {
                 new BooksGetResponse(102L, "Clean Code")
         );
 
-        given(coreApiClient.getBooksIds(anyList())).willReturn(responses);
+        CommonResponse<List<BooksGetResponse>> wrappedResponse =
+                new CommonResponse<>(LocalDateTime.now(), "SUCCESS", responses);
+        given(coreApiClient.getBooksIds(anyList())).willReturn(wrappedResponse);
 
         // when
         CouponPolicyGetResponse result = strategy.get(couponPolicy);

@@ -55,3 +55,10 @@ management:
       enabled: true
     rabbit:
       enabled: true
+
+# ===== RabbitMQ 설정 (Dev) =====
+rabbitmq:
+  member:
+    exchange: dev-cm-member-fanout-exchange
+    coupon-queue: dev-cm-member-signup-coupon-queue
+    coupon-dlq: dev-cm-member-signup-coupon-dlq
