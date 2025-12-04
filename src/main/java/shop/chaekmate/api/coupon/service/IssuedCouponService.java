@@ -9,10 +9,13 @@ import shop.chaekmate.api.coupon.dto.request.BookCouponCheckRequest;
 import shop.chaekmate.api.coupon.dto.request.BooksAvailableCouponsRequest;
 import shop.chaekmate.api.coupon.dto.request.CalculateDiscountRequest;
 import shop.chaekmate.api.coupon.dto.request.CouponIssueRequest;
+import shop.chaekmate.api.coupon.dto.request.IssuedCouponDetailInfo;
+import shop.chaekmate.api.coupon.dto.request.IssuedCouponDiscountDetailItem;
 import shop.chaekmate.api.coupon.dto.response.*;
 import shop.chaekmate.api.coupon.entity.CouponPolicy;
 import shop.chaekmate.api.coupon.entity.IssuedCoupon;
 import shop.chaekmate.api.coupon.entity.type.CouponType;
+import shop.chaekmate.api.coupon.entity.type.DiscountType;
 import shop.chaekmate.api.coupon.exception.AlreadyIssuedCouponException;
 import shop.chaekmate.api.coupon.repository.CouponPolicyRepository;
 import shop.chaekmate.api.coupon.repository.IssuedCouponRepository;
@@ -25,8 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class IssuedCouponService {
 
@@ -180,6 +183,106 @@ public class IssuedCouponService {
 
         issuedCoupon.use();
     }
+
+    @Transactional
+    public BooksAvailableCouponsDetailResponse getAvailableCouponsForBooksDetail(
+            Long memberId,
+            BooksAvailableCouponsRequest request) {
+
+        List<IssuedCoupon> allCoupons =
+                issuedCouponRepository.finaAvailableCouponForBooks(memberId, request.books());
+
+        Map<Long, List<IssuedCouponDiscountDetailItem>> bookCouponMap = new HashMap<>();
+
+        for (BookCouponCheckRequest book : request.books()) {
+
+            List<IssuedCouponDiscountDetailItem> items = new ArrayList<>();
+
+            for (IssuedCoupon coupon : allCoupons) {
+
+                if (!isCouponApplicableToBook(coupon, book)) continue;
+
+                CouponPolicy policy = coupon.getCouponPolicy();
+
+                Integer rate = policy.getDiscountType() == DiscountType.RATE
+                        ? policy.getDiscountValue()
+                        : null;
+
+                Integer amount = policy.getDiscountType() == DiscountType.AMOUNT
+                        ? policy.getDiscountValue()
+                        : null;
+
+                int discountAmount = coupon.calculateDiscountAmount(book.amount());
+
+                items.add(new IssuedCouponDiscountDetailItem(
+                        coupon.getId(),
+                        policy.getName(),
+                        policy.getDiscountType(),
+                        rate,
+                        amount,
+                        discountAmount
+                ));
+            }
+
+            bookCouponMap.put(book.bookId(), items);
+        }
+
+        List<IssuedCouponDetailInfo> couponResponses = new ArrayList<>();
+        for (IssuedCoupon coupon : allCoupons) {
+
+            CouponPolicy policy = coupon.getCouponPolicy();
+
+            Integer rate = policy.getDiscountType() == DiscountType.RATE
+                    ? policy.getDiscountValue()
+                    : null;
+
+            Integer amount = policy.getDiscountType() == DiscountType.AMOUNT
+                    ? policy.getDiscountValue()
+                    : null;
+
+            couponResponses.add(new IssuedCouponDetailInfo(
+                    coupon.getId(),
+                    policy.getName(),
+                    policy.getDiscountType(),
+                    rate,
+                    amount
+            ));
+        }
+
+        return new BooksAvailableCouponsDetailResponse(couponResponses, bookCouponMap);
+    }
+
+    @Transactional
+    public void useCouponsBulk(Long memberId, List<Long> issuedCouponIds) {
+
+        // 쿠폰들 조회
+        List<IssuedCoupon> coupons = issuedCouponRepository.findAllById(issuedCouponIds);
+
+        if (coupons.size() != issuedCouponIds.size()) {
+            throw new IllegalArgumentException("일부 쿠폰을 찾을 수 없습니다.");
+        }
+
+        for (IssuedCoupon coupon : coupons) {
+
+            // 본인 쿠폰인지
+            if (coupon.getMemberId()!=memberId) {
+                throw new IllegalArgumentException("본인의 쿠폰만 사용할 수 있습니다. couponId=" + coupon.getId());
+            }
+
+            // 사용 여부 체크
+            if (coupon.getUsedAt() != null) {
+                throw new IllegalStateException("이미 사용된 쿠폰 포함됨. couponId=" + coupon.getId());
+            }
+
+            // 만료 여부 체크
+            if (LocalDateTime.now().isAfter(coupon.getExpiredAt())) {
+                throw new IllegalStateException("만료된 쿠폰 포함됨. couponId=" + coupon.getId());
+            }
+            log.info("쿠폰 번호{} 사용된 쿠폰 이름 {}", coupon.getCouponPolicy().getId(), coupon.getCouponPolicy().getName());
+            coupon.use();
+        }
+    }
+
 
     @Transactional
     public void issueWelcomeCoupon(Long memberId) {
