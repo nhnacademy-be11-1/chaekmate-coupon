@@ -56,3 +56,10 @@ management:
   info:
     env:
       enabled: true
+
+# ===== RabbitMQ 설정 (Prod) =====
+rabbitmq:
+  member:
+    exchange: prod-cm-member-fanout-exchange
+    coupon-queue: prod-cm-member-signup-coupon-queue
+    coupon-dlq: prod-cm-member-signup-coupon-dlq

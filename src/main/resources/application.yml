@@ -2,34 +2,40 @@ spring:
   application:
     name: chaekmate-coupon
 
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
 
-    rabbitmq:
-      host: ${RABBITMQ_HOST}
-      port: ${RABBITMQ_PORT}
-      username: ${RABBITMQ_USERNAME}
-      password: ${RABBITMQ_PASSWORD}
+    # ===== 리스너 설정 (메시지 소비) =====
+    listener:
+      simple:
+        retry:
+          enabled: true               # 재시도 활성화
+          initial-interval: 3000      # 첫 재시도: 3초 후
+          max-attempts: 3             # 최대 시도 횟수: 3번
+          multiplier: 2.0             # 재시도 간격: 2배 증가
+        acknowledge-mode: auto        # ACK 모드는 simple 바로 아래로 빠져야 함
 
-    data:
-      redis:
-        host: ${REDIS_HOST}
-        password: ${REDIS_PASSWORD}
-        port: ${REDIS_PORT}
-        database: ${REDIS_RANGE:304}
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      password: ${REDIS_PASSWORD}
+      port: ${REDIS_PORT}
+      database: ${REDIS_RANGE:304}
 
-  springdoc:
-    api-docs:
-      path: /v3/api-docs
-    swagger-ui:
-      path: /swagger-ui.html
-      enabled: true
-
-
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
 
 eureka:
   client:
     fetch-registry: true
     register-with-eureka: true
-
     service-url:
       defaultZone: ${EUREKA_DEFAULT_URL:http://admin:1234@localhost:8761}
   instance:
@@ -37,9 +43,7 @@ eureka:
     lease-renewal-interval-in-seconds: 5
     lease-expiration-duration-in-seconds: 10
 
-
 jdbc-template-batch-size: ${JDBC_BATCH_SIZE:100}
-
 
 management:
   endpoints:

@@ -35,3 +35,10 @@ eureka:
     enabled: false
 
 jdbc-template-batch-size: ${JDBC_BATCH_SIZE:100}
+
+# ===== RabbitMQ 설정 (Dev) =====
+rabbitmq:
+  member:
+    exchange: dev-cm-member-fanout-exchange
+    coupon-queue: dev-cm-member-signup-coupon-queue
+    coupon-dlq: dev-cm-member-signup-coupon-dlq

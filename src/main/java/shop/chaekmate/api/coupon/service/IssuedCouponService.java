@@ -1,6 +1,7 @@
 package shop.chaekmate.api.coupon.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class IssuedCouponService {
@@ -177,5 +179,34 @@ public class IssuedCouponService {
         }
 
         issuedCoupon.use();
+    }
+
+    @Transactional
+    public void issueWelcomeCoupon(Long memberId) {
+        log.info("웰컴 쿠폰 발급: memberId={}", memberId);
+
+        CouponPolicy welcomePolicy = couponPolicyRepository
+                .findByType(CouponType.WELCOME)
+                .orElseThrow(() -> new IllegalStateException(
+                        "월컴 쿠폰 정책이 존재하지 않습니다."));
+
+        boolean alreadyIssued = issuedCouponRepository
+                .existsByMemberIdAndCouponPolicyId(memberId, welcomePolicy.getId());
+
+        if (alreadyIssued) {
+            log.info("이미 웰컴 쿠폰 발급: memberId={}", memberId);
+            return;
+        }
+
+        IssuedCoupon issuedCoupon = new IssuedCoupon(
+                memberId,
+                welcomePolicy,
+                LocalDateTime.now()
+        );
+
+        issuedCouponRepository.save(issuedCoupon);
+
+        log.info("웰컴 쿠폰 발급 완료: memberId={}, couponId={}",
+                memberId, issuedCoupon.getId());
     }
 }
