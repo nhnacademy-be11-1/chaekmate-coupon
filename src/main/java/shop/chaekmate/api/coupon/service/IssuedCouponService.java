@@ -283,4 +283,33 @@ public class IssuedCouponService {
         }
     }
 
+
+    @Transactional
+    public void issueWelcomeCoupon(Long memberId) {
+        log.info("웰컴 쿠폰 발급: memberId={}", memberId);
+
+        CouponPolicy welcomePolicy = couponPolicyRepository
+                .findByType(CouponType.WELCOME)
+                .orElseThrow(() -> new IllegalStateException(
+                        "월컴 쿠폰 정책이 존재하지 않습니다."));
+
+        boolean alreadyIssued = issuedCouponRepository
+                .existsByMemberIdAndCouponPolicyId(memberId, welcomePolicy.getId());
+
+        if (alreadyIssued) {
+            log.info("이미 웰컴 쿠폰 발급: memberId={}", memberId);
+            return;
+        }
+
+        IssuedCoupon issuedCoupon = new IssuedCoupon(
+                memberId,
+                welcomePolicy,
+                LocalDateTime.now()
+        );
+
+        issuedCouponRepository.save(issuedCoupon);
+
+        log.info("웰컴 쿠폰 발급 완료: memberId={}, couponId={}",
+                memberId, issuedCoupon.getId());
+    }
 }

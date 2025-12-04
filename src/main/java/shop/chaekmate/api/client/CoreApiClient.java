@@ -15,5 +15,5 @@ public interface CoreApiClient {
     CommonResponse<List<List<CategoriesGetResponse>>> getCategoriesWithParents(@RequestParam List<Long> categoryIds);
 
     @GetMapping("/books/bulk")
-    List<BooksGetResponse> getBooksIds(@RequestParam List<Long> bookIds);
+    CommonResponse<List<BooksGetResponse>> getBooksIds(@RequestParam List<Long> bookIds);
 }
