@@ -24,11 +24,11 @@ public class CouponPolicyController {
         return ResponseEntity.ok(responses);
     }
 
-    @GetMapping("/books/{bookIds}")
+    @GetMapping("/books/{bookId}")
     public ResponseEntity<List<BookCouponPolicyResponse>> getAvailableCouponPoliciesForBook(
             @PathVariable Long bookId,
-            @RequestParam List<Long> categoryIds,
-            @RequestHeader("X-Member_id") Long memberId) {
+            @RequestParam(required = false) List<Long> categoryIds,
+            @RequestHeader("X-Member-Id") Long memberId) {
         List<BookCouponPolicyResponse> responses = couponPolicyService.getAvailableCouponPoliciesForBook(bookId, categoryIds, memberId);
 
         return ResponseEntity.ok(responses);
