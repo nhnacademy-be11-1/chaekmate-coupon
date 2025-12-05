@@ -19,8 +19,7 @@ public class BirthdayCouponScheduler {
     private final RedisTemplate<String, String> redisTemplate;
     private final BirthdayCouponService birthdayCouponService;
 
-//    @Scheduled(cron = "0 0 0 1 * ?")
-    @Scheduled(cron = "0 * * * * *", zone = "Asia/Seoul") // 1분마다 실행
+    @Scheduled(cron = "0 0 0 1 * ?", zone = "Asia/Seoul")
     public void issueBirthdayCoupons() {
         String lockKey = String.format(
                 "batch:birthday-coupon:%d-%-2d",
