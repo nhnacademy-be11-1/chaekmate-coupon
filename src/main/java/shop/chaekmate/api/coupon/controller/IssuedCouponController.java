@@ -77,4 +77,25 @@ public class IssuedCouponController {
         issuedCouponService.useCoupon(memberId, issuedCouponId);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/for-books/detail")
+    public ResponseEntity<BooksAvailableCouponsDetailResponse> getAvailableCouponsForBooksDetail(
+            @RequestHeader("X-Member-Id") Long memberId,
+            @RequestBody @Valid BooksAvailableCouponsRequest request
+    ) {
+        BooksAvailableCouponsDetailResponse response =
+                issuedCouponService.getAvailableCouponsForBooksDetail(memberId, request);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/use/bulk")
+    public ResponseEntity<Void> useCouponsBulk(
+            @RequestHeader("X-Member-Id") Long memberId,
+            @RequestBody List<Long> issuedCouponIds
+    ) {
+        issuedCouponService.useCouponsBulk(memberId, issuedCouponIds);
+        return ResponseEntity.ok().build();
+    }
+
 }

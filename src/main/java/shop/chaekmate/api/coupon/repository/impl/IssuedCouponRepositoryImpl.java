@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import shop.chaekmate.api.coupon.dto.request.BookCouponCheckRequest;
 import shop.chaekmate.api.coupon.entity.IssuedCoupon;
+import shop.chaekmate.api.coupon.entity.type.CouponType;
 import shop.chaekmate.api.coupon.repository.IssuedCouponRepositoryCustom;
 
 import java.time.LocalDateTime;
@@ -83,5 +84,22 @@ public class IssuedCouponRepositoryImpl implements IssuedCouponRepositoryCustom 
                 )
                 .orderBy(issuedCoupon.expiredAt.asc())
                 .fetch();
+    }
+
+    @Override
+    public boolean existsByMemberIdAndCouponTypeAndYear(
+            Long memberId, CouponType couponType, int year) {
+        Integer count = queryFactory
+                .selectOne()
+                .from(issuedCoupon)
+                .join(issuedCoupon.couponPolicy, couponPolicy)
+                .where(
+                        issuedCoupon.memberId.eq(memberId),
+                        couponPolicy.type.eq(couponType),
+                        issuedCoupon.issuedAt.year().eq(year)
+                )
+                .fetchFirst();
+
+        return count != null;
     }
 }

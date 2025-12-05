@@ -2,6 +2,13 @@ spring:
   application:
     name: coupon-service
 
+  config:
+    import: "optional:configserver:"    # configserver import 활성화
+
+  cloud:
+    config:
+      enabled: false # Config server 사용 설정 기본 비활성화
+
   datasource:
     url: jdbc:h2:mem:chaekmate;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
     driver-class-name: org.h2.Driver
@@ -35,3 +42,10 @@ eureka:
     enabled: false
 
 jdbc-template-batch-size: ${JDBC_BATCH_SIZE:100}
+
+# ===== RabbitMQ 설정 (Dev) =====
+rabbitmq:
+  member:
+    exchange: dev-cm-member-fanout-exchange
+    coupon-queue: dev-cm-member-signup-coupon-queue
+    coupon-dlq: dev-cm-member-signup-coupon-dlq
