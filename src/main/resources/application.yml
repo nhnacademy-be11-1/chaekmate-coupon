@@ -53,6 +53,11 @@ jdbc-template-batch-size: ${JDBC_BATCH_SIZE:100}
 
 # Spring Boot Actuator 서버 상태(헬스) 모니터링
 management:
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      access: unrestricted
   endpoints:
     web:
       exposure:
