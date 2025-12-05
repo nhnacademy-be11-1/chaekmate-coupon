@@ -2,6 +2,7 @@ package shop.chaekmate.api.coupon.repository;
 
 import shop.chaekmate.api.coupon.dto.request.BookCouponCheckRequest;
 import shop.chaekmate.api.coupon.entity.IssuedCoupon;
+import shop.chaekmate.api.coupon.entity.type.CouponType;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,4 +26,10 @@ public interface IssuedCouponRepositoryCustom {
 
     // 주문서용 쿠폰 조회
     List<IssuedCoupon> finaAvailableCouponForBooks(Long memberId, List<BookCouponCheckRequest> books);
+
+    boolean existsByMemberIdAndCouponTypeAndYear(
+            Long memberId,
+            CouponType couponType,
+            int year
+    );
 }
