@@ -20,7 +20,7 @@ public class BirthdayCouponScheduler {
     private final BirthdayCouponService birthdayCouponService;
 
 //    @Scheduled(cron = "0 0 0 1 * ?")
-    @Scheduled(initialDelay = 5 * 60 * 1000)
+    @Scheduled(cron = "0 * * * * *", zone = "Asia/Seoul") // 1분마다 실행
     public void issueBirthdayCoupons() {
         String lockKey = String.format(
                 "batch:birthday-coupon:%d-%-2d",
